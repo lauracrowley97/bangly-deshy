@@ -42,7 +42,7 @@ df[abs(df.LongitudeDec - df.LongitudeDec.shift(1)) > LonStd]
 #make range of distances between points thats acceptable
 #check distance between point and point after it against range, marking where it's too large
 df_distances_lon = [abs(df.LongitudeDec - df.LongitudeDec.shift(-1)) for row in df.LongitudeDec]
-df_distances_lon = pd.DataFrame(df_distances_lon)
+df_distances_lon = df_distances_lon[0]
 df_distances_lon_std = df_distances_lon.std()
 
 df_outliers = [(abs(df.LongitudeDec - df.LongitudeDec.shift(-1)) > LonStd) for row in df.LongitudeDec]
