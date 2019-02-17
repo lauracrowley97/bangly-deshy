@@ -1,0 +1,39 @@
+Okay so just creating an overview of scripts we have/scripts we need to do by Wednesday..also might form part of the report as a general explanation of our approac
+
+First we clean the Road data from .lrps.htm files (original from Bangly-deshy ministry) with a python script (NAME??)
+    1. First htm need to be imported with pandas: takes a list of the roadnames to iterate through every .lrps file and convert
+    2. Takes one road at a time and looks for outliers of lrp points.
+    3. Outliers that are of type 'bridge' are interpolated.
+    4. all other outliers are (TO BE DECIDED...if no time we just delete these)
+    5. Chainage is checke: TO BE DONE (compare distance between two points and the difference in their chainage..some threshold value is needed, that is different for th Type of road)
+    6. output files: file of all changed/deleted lrp points.
+          ...also output a csv for each road with column names (lrp number, lat, lon, chainage, updated (y/n))...containing all lrp points and whethere they were changed
+
+An initial visual scan of the generated co-ordinates should be completed at this point.
+
+Next script is an R script to clean the bridge data
+    1. Uses the .csv output from the roads, and the BMMS_overview.csv initially.
+    2. Iterates through each bridge point and compares it to the lrp in the road data to see if anything related to it has changed
+    3. If so, the corresponding bridge point needs regenerating
+    4. There are 4 ways of converting bridge point location from the road data
+    5. output files: file of all changed/deleted bridge lrp points
+              ...... also a the output csv of the BMMS_overview with corrected data
+    
+
+
+Another R script generats the .tcv of the roads, that is required for simulation
+    1. this is adapted to the required format form the .csv file generated in the first python
+    2. Pretty straight forward - see brightspace: 
+          "infrastructure/_roads.tcv: a tab-separated text-file with processed information from the
+          RMMS dataset. It contains a first line with explanation, and the following tab-separated data
+          starting from line 2, with one road per line. 
+
+              o road name: the official name of the road
+              o lrp1: the name of the first LRP of the road
+              o lat1: the latitude of lrp1
+              o lon1: the longitude of lrp1
+              o ...
+              o lrpn: the name of the last LRP of the road
+              o latn: the latitude of lrpn
+              o lonn: the longitude of lrpn"
+
