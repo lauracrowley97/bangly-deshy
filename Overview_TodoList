@@ -7,7 +7,7 @@ First we clean the Road data from .lrps.htm files (original from Bangly-deshy mi
     4. all other outliers are (TO BE DECIDED...if no time we just delete these)
     5. Chainage is checke: TO BE DONE (compare distance between two points and the difference in their chainage..some threshold value is needed, that is different for th Type of road)
     6. output files: file of all changed/deleted lrp points.
-          ...also output a csv for each road with column names (lrp number, lat, lon, chainage, updated (y/n))...containing all lrp points and whethere they were changed
+          ...also output a csv for each road with column names (road name,lrp number, lat, lon, chainage, updated (y/n))...containing all lrp points and whethere they were changed
 
 An initial visual scan of the generated co-ordinates should be completed at this point.
 
