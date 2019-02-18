@@ -53,6 +53,7 @@ def determine_outliers(x):
      diff_cutoff = (4*diff_lon_std)
 
      if diff_cutoff > 0.001:
+          counter = counter + 1
           find_replace_outliers(df,df_original, diff_cutoff)
      else:
           print("no futher outliers, go to next file")
