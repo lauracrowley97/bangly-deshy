@@ -31,8 +31,8 @@ LatStd = df.LatitudeDec.std()
 #df.head()
 
 # below commented out to be replaced by next section (with list comprehension)
-df[abs(df.LongitudeDec - df.LongitudeDec.shift(-1)) > LonStd]
-df[abs(df.LongitudeDec - df.LongitudeDec.shift(1)) > LonStd]
+#df[abs(df.LongitudeDec - df.LongitudeDec.shift(-1)) > LonStd]
+#df[abs(df.LongitudeDec - df.LongitudeDec.shift(1)) > LonStd]
 
 #list comprehension
 #[ expression for item in list if conditional ]
@@ -60,6 +60,7 @@ diff_cutoff = (2.698*diff_lon_std)
 #outliers = [df["Outlier"].istrue() for row in df if (df.Difference > diff_cutoff)]
 
 outliers = pd.DataFrame()
+for i in range(len(df1.LongitudeDec))
 for row in df:
     print(type(row))
     break 
