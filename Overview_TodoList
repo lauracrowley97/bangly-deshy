@@ -36,4 +36,19 @@ Another R script generats the .tcv of the roads, that is required for simulation
               o lrpn: the name of the last LRP of the road
               o latn: the latitude of lrpn
               o lonn: the longitude of lrpn"
-
+              
+              
+ Dealing with semantic inaccuracy in Chainage
+ 
+ There are 29 bridges whose Lat/Lon are estimated with 'road_interpolate' and are longer than 50m and on an N road.
+ There 2 bridges whose Lat/Lon are estimated with 'road_chainage' and are longer than 50m and on an N road. 
+ For a number of reasons, we have decided that the error checking of these bridges should be completed manually 
+ i.e. look up the bridge name on google maps and check the lat/lon co-ordinates.
+ Justification:
+    1. Difficulty in fixing: there are reasonably quick ways of automating the estimate of the chainage of LRP point in a road (some % of the straight-line distance between points).
+    But there is no reliable way of checking that the chainage of the bridge points are correct other than manually. 
+    2. Errors have low impact on pragmatic precision because these bridges are still on the correct road. 
+    The fact that they may be a certain number of kilometers (max the difference in chainage changes due to maintenance/straightening is order of magnitude tens of km).
+    will not effect the analysis. We assume that the assessment of the importance of a bridge is mostly due to the areas it links, and the road it is on, which is preserved.
+    
+Error searching revealed the following errors/changes:
