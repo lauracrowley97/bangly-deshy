@@ -26,10 +26,11 @@ import numpy as np
 #    plot_road(df_original)
 #print('x')
 
+road_cleaned = pd.DataFrame()
 def import_data():
      # doing all files together
      # read in htm file
-     roadnames = pd.read_csv('_roadnames_list_2.csv') # need to have roadnames list in same folder path 
+     roadnames = pd.read_csv('_Final_road_cleaning_roadnames_list_2.csv') # need to have roadnames list in same folder path 
      roadnames_list = list(roadnames.columns.unique())
      for roadname in roadnames_list:
           filename = "{}.lrps.htm".format(roadname)
@@ -50,6 +51,10 @@ def import_data():
           #plot original road for visual inspection
           #plot_road(df_original)
           #df
+          determine_outliers(df)
+          plot_road(df_original)
+          global road_cleaned
+          road_cleaned = road_cleaned.append(df_original)
 print('x')
 
 import_data()
@@ -90,16 +95,15 @@ def determine_outliers(x):
           counter = counter + 1
           find_replace_outliers(df,df_original, diff_cutoff)
      else:
-          print("no futher outliers, go to next file")
           counter = 0
 
 print("x")
 
 
-find_replace_outliers(df,df_original,0.005)
+#find_replace_outliers(df,df_original,0.005)
 
 def find_replace_outliers(x,p,diff_cutoff):
-    #select the outliers in a different dataframe
+     #select the outliers in a different dataframe
      outliers = pd.DataFrame()
      outliers1 = x.loc[x["Difference_up"] > diff_cutoff  ]
      outliers2 = x.loc[x["Difference_down"] > diff_cutoff  ]
@@ -107,10 +111,9 @@ def find_replace_outliers(x,p,diff_cutoff):
      outliers = outliers.append(outliers2)
      outliers = outliers.drop_duplicates().sort_values(by=['LRPNo'])
      outliers['middle_outlier'] = np.where((outliers['Difference_up'] > diff_cutoff) & (outliers['Difference_down'] > diff_cutoff), True,False)
-    #average out the wrong values for the LongitudeDec
+     #average out the wrong values for the LongitudeDec
      indeces_list = outliers.index[outliers['middle_outlier'] == True].tolist()
      outliers["replaced"] = ""
-
      for i in indeces_list:
           k = i + 1
           m = i - 1
@@ -124,9 +127,7 @@ def find_replace_outliers(x,p,diff_cutoff):
      df_original = p.drop(indeces_list)
      df_original = df_original.append(to_be_merged_rows)
      df_original = df_original.sort_values(by=['LRPNo'])
-     
-     
-     plot_road(df_original)
+     #plot_road(df_original)
      determine_outliers(df_original)
-
 print('x')
+
