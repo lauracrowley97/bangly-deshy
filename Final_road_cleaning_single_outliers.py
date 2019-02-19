@@ -39,6 +39,8 @@ def plot_road(x):
 
 print('x')
 
+
+plot_road(df_original)
 counter = 0
 
 determine_outliers(df)
@@ -64,8 +66,6 @@ def determine_outliers(x):
      else:
           print("no futher outliers, go to next file")
           counter = 0
-          output_df = df_original
-          return output_df
 
 print("x")
 
@@ -94,7 +94,7 @@ def find_replace_outliers(x,p,diff_cutoff):
      #merg the outliers in the original dataframe 
      to_be_merged_rows = outliers.loc[outliers["replaced"] == True]
      to_be_merged_rows = to_be_merged_rows.drop(["Difference_up", "Difference_down","middle_outlier"],axis =1)
-
+     global df_original 
      df_original = p.drop(indeces_list)
      df_original = df_original.append(to_be_merged_rows)
      df_original = df_original.sort_values(by=['LRPNo'])
