@@ -52,3 +52,13 @@ Another R script generats the .tcv of the roads, that is required for simulation
     will not effect the analysis. We assume that the assessment of the importance of a bridge is mostly due to the areas it links, and the road it is on, which is preserved.
     
 Error searching revealed the following errors/changes:
+
+
+
+
+
+
+Semantic incompleteness error in the bridge data:
+There are entire roads in the RMMS zip ( exact number here please) for which no corresponding files of bridges exist in the BMMS zip.
+This means that for entire roads, no bridges are included. 
+We have included this list in our output files but have not fixed this due to time constraints but would like the client to be made aware of this incompleteness.
