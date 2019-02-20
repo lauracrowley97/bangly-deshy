@@ -24,7 +24,7 @@ Second, we clean the bridge data from the BMMS_overview.csv
 	a. If the LRP number from the road data and the bridge data match, but their latitude and longitude coordinates do not, the latitude and longitude coordinates for the bridge data are replaced by the latitude and longitude coordinates from the matching (cleaned) road data.
 	b. If the short line distance between a bridge longitude and latitude and a road point longitude and latitude is less than a threshold of 20 meters, then the latitude and longitude coordinates for the bridge data are replaced by the latitude and longitude coordinates from the road data with the closest coordinate match.
 	c. If the chainage difference (difference between road and bridge chainage) is less than the threshold of 10 meters, than the latitude and longitude coordinates for the bridge data are replaced by the latitude and longitude coordinates from the road data with the closest chainage match.
-	d. If the chainage difference (##update description of this) is less than the threshold of 200 meters, (##update description of this)
+	d. If the chainage difference (difference between road and bridge chainage) is less than the threshold of 200 meters, (##update description of this)
     5. If nothing else matched closely enough from the four previous methods, then the bridge location data is replaced by an interpolation (simple mean) of the entries above and below the outlier entry.
     6. The output files are a version of the BMMS_overview with corrected data (BMMS_Overview_Cleaned.csv) and a change log (change_log.csv)
 
