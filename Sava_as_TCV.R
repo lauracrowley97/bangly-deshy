@@ -1,9 +1,12 @@
 #install.packages("rlist")
 library(rlist)
 
-df <- read.csv('BMMS_overview.csv',sep = ',', header = T)
+
+
+df <- read.csv('cleaned_all_road_data.csv',sep = '\t', header = T)
+df$LRPNo <- toString(df['LRPNo'])
 colnames(df)[which(names(df) == "ï..road")] <- "road"
-columns <- c("road", "LRPName", "lat", "lon")
+columns <- c("road", "LRPName", "lat", "lon") #update this
 df <- df[columns]
 df[,3] <- as.numeric(df[,3])
 road_list <- unique(df$road)
