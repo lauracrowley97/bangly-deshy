@@ -51,7 +51,7 @@ lon_roadpoint <- c(0,0,0)
 
 
 #calculate difference in chainage for the bridge and every lrp point on the road - could get a match!
-chainage_dif <- abs(lrp_chainage - road_chainage)
+chainage_diff <- abs(lrp_chainage - road_chainage) ##Shouldn't this be bridge_chainage instead of lrp_chainage? lrp_chainage is not defined anywhere
 #big thoughts: if chainage was never updated after maintanence, for the road point, then this won't cause an error as the lrp name will 
 #still match an lrp name on the road --- (which we are checking for very wrong chaiange records) -- and if updated according to the location of that
 #LRP point - in this case the chainage may still be incorrect in the bridge -- is this ever used agaiN? do we need to check for this case and update
