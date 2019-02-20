@@ -17,7 +17,6 @@ road_list <- unique(df$Road)
 #m1 <- t(df)
 #d2 <- data.frame(r1=row.names(m1), m1, row.names = NULL)
 
-
 for (road in road_list) {
   #road = "N1"
   roaddata = list()
