@@ -1,0 +1,9 @@
+Checking for bridge duplicates:
+
+> length( unique(bridge_data$structureNr))
+[1] 21407
+> length(bridge_data$structureNr)
+[1] 21407
+
+
+No duplicates found :0
