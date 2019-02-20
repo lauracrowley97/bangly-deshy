@@ -49,7 +49,7 @@ Maybe make a summary table like this:
   what we cleaned			what type of data issue it was (syntactic, semantic, pragmatic etc etc)			how we cleaned it
 
   
-Dealing with semantic inaccuracy in Chainage 
+**Dealing with semantic inaccuracy in Chainage 
  There are 29 bridges whose Lat/Lon are estimated with 'road_interpolate' and are longer than 50m and on an N road.
  There 2 bridges whose Lat/Lon are estimated with 'road_chainage' and are longer than 50m and on an N road. 
  For a number of reasons, we have decided that the error checking of these bridges should be completed manually 
@@ -65,7 +65,7 @@ Error searching revealed the following errors/changes:
 
 
 
-Semantic incompleteness error in the bridge data:
+**Semantic incompleteness error in the bridge data:
 There are entire roads in the RMMS zip (##update exact number here please) for which no corresponding files of bridges exist in the BMMS zip.
 This means that for entire roads, no bridges are included. 
 We have included this list in our output files and have implemented a limited repair due to time constraints but would like the client to be made aware of this incompleteness.
@@ -81,13 +81,31 @@ The missing_roads.py script generates an output of these 'missing bridges' to be
 Limitations:
 	1. Certainly this method is rough in semantic accuracy (lenghts/start points are estimates and unverified)
 	2. Secondly, semantic incompleteness is introduced for each of these 'filled in' bridges as there are many fields in BMMS_Overview.csv for which we do not have information to fill in.
+	3. This inherently generates a degree of type insufficiency in those particular bridge data points as they do not contain detailed information of type structure and grade quality of bridges.
+	This is particularly important for the Worldbank investment analysis and certainly a limitation of this method.
+	
 However, the alternative is to keep a known large number of semantic incompleteness in the bridge dataset, and also that there would be entrie roads for which no bridges are included at all.
 The impact of this on pragmatic incompleteness would be unacceptable for the worldbank study so some solution must be applied for this error type, in our opinion, despite its limitations.
 In a more comprehensive data preparation project, it would be advisable to return to the Ministry of Transport with the finite list of roads for which no folder exists in the BMMS zip, and request these.
 
-The possiblity of duplicated bridge data was investigated using the following chunk of code:
+**On the note of pragmatism, it is important that there is accuracy in the grade quality of each bridge for this study. Unfortunately, we have completed no correction/checking of this field
+in our data cleaning we could think of no reasonable way to cross-check this field with the data provided to us. It would be recommended to manually check (ie. google the name) a sample population (n>30) of the entire bridge set,
+to be able to give an estimate of the sematic accuracy of the Quality of bridges. At least if we cannot feasibly fix all these errors,
+it would be useful when interpreting the results to know how reliable this field is, if the WorldBank is considering its investments.
 
-In terms of Presentation Suitability, we found no error with the display of the data in the Java application with the roads, bridges, waterways plotted.
+**The possiblity of duplicated bridge data was investigated using the following chunk of code:
+
+		> length( unique(bridge_data$structureNr))
+		[1] 21407
+		> length(bridge_data$structureNr)
+		[1] 21407
+No duplicates found :0
+The limitation of this method is that it is assumed that structureNr is semanticly accurate and consistent and unique. 
+This is a reasonable assumption as we have completed a short visual scan of a selection of bridges and it seems to be unique.
+
+
+
+**In terms of Presentation Suitability, we found no error with the display of the data in the Java application with the roads, bridges, waterways plotted.
 This visual display is useful to set context for the Worldbank's problem and to visually inspect for errors. The colour-coding of bridges by quality was especially suitable.
 One draw back of this visualisation is that it tends to emphasize the prominence of small errors to the viewer.
 One single errored co-ordinate produces a spike in the road that is much more visually obstructve that 1000s of correct co-ordinate points.
