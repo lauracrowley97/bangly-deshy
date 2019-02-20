@@ -1,7 +1,20 @@
-Okay so just creating an overview of scripts we have/scripts we need to do by Wednesday..also might form part of the report as a general explanation of our approach
+Advanced Discrete Simulation
+Assignment 1
+Group 14
+20 February 2019
 
-First we clean the Road data from .lrps.htm files (original from Bangly-deshy ministry) with a python script (NAME??)
-    1. First htm need to be imported with pandas: takes a list of the roadnames to iterate through every .lrps file and convert
+Overview of Data Cleaning Files:
+Road_cleaning_FINAL.py - script that cleans the road data
+BurningMoreBridges.R - script that cleans the bride data, based on the cleaned road data
+
+Road Cleaning
+First we clean the road data from .lrps.htm files (original from the ministry) with a python script. Inside the script, the following cleaning process takes place:
+    1. The functions that will clean the data are defined and run.
+	a. import_data() this function reads in the road files ("name".lrps.htm) based on a list of names of all the roads in Bangladesh. It then iterates through all the road files, opening and closing each one in turn, while reading in the data to data frames and performing some first-pass data cleaning (removing columns of NAs, renaming column headers, etc.). It then calls determine_outliers on the data, and afterwards saves the cleaned data to a tab separated file.
+	b. determine_outliers() calculates (for the longitude and latitude separately and simultaneously) the difference between a longitude or latitude entry, and the corresponding value in the entry above and below it. It then takes the standard deviation of these difference values and uses that to create a cutoff value. When a difference is above a cutoff value, the function find_replace_outliers() is called, otherwise the data is appended to a data frame that stores the cleaned data.
+	c. find_replace_outliers() collects the outliers in the road data (identified in determine_outliers) into a data frame of outliers. It then identifies outliers that are unreasonably far away from both the entry above it and the entry below it (i.e. isolating the outlier (in the case of a single outlier) from the points above and below it that are not outliers themselves). These outliers are replaced by an interpolation (simple mean) of the entries above and below the outlier entry. The interpolated points are then merged with the data frame and used to replace the outlier points they correspond to.
+	c. 
+ htm need to be imported with pandas: takes a list of the roadnames to iterate through every .lrps file and convert
     2. Takes one road at a time and looks for outliers of lrp points.
     3. Outliers that are of type 'bridge' are interpolated.
     4. all other outliers are (TO BE DECIDED...if no time we just delete these)
