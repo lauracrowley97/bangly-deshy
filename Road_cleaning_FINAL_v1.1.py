@@ -8,6 +8,7 @@ import numpy as np
 global df
 global df_original
 global diff_cutoff
+global diff_cutoff_lat_dk
 global counter 
 global road_cleaned
 
@@ -150,80 +151,67 @@ print('x')
 
 df = road_cleaned.loc[road_cleaned["Road"] == "N1"].sort_index()
 plot_road(df)
+del df
+del road_cleaned
 
 find_grouped_outliers()
 
 road_names_list_n1n4 = ["N4","N1"]
 
+dk = pd.DataFrame()
+del df
+
 def find_grouped_outliers():
      #Get the differences between up and down
-     global df
+     global dk
      global road_cleaned
 
      for i in road_names_list_n1n4:
-        df = road_cleaned.loc[road_cleaned["Road"]==i]
-        df["replaced_grouped"] = ""
-        print(df)
+        dk = road_cleaned.loc[road_cleaned["Road"]==i]
+        dk["replaced_grouped"] = ""
+        print(dk)
         #find_grouped_lat_outliers()
 
 print('x')
 
+find_grouped_outliers()
+find_grouped_lat_outliers_find_indeces()
+find_grouped_lat_outliers_change_them()
+
+
 find_grouped_lat_outliers()
 
+indeces_list_lat = []
+
+
 road_cleaned
-def find_grouped_lat_outliers():
-    global df
-    df["Difference_down_lat"] = [abs(df.LatitudeDec - df.LatitudeDec.shift(-1)) for row in df.LatitudeDec]
+def find_grouped_lat_outliers_find_indeces():
+    global dk
+    global diff_cutoff_lat_dk
+    global indeces_list_lat
+    dk["Difference_down_lat"] = [abs(dk.LatitudeDec - dk.LatitudeDec.shift(-1)) for row in dk.LatitudeDec]
+    dk_difference_lat = [abs(dk.LatitudeDec - dk.LatitudeDec.shift(-1)) for row in dk.LatitudeDec]
+    dk["Difference_down_lat"] = dk_difference_lat[0]
     
-    diff_lat_std = df.Difference_down_lat.std()
-    diff_cutoff_lat = (4*diff_lat_std)
-    
-    df["LatitudeDec"] = [df.LatitudeDec.shift(-1) for row in df.LatitudeDec if df.LatitudeDec > diff_cutoff_lat]
-
+    diff_lat_std_dk = dk.Difference_down_lat.std()
+    diff_cutoff_lat_dk = (5*diff_lat_std_dk)
+    indeces_list_lat = dk.index[dk['Difference_down_lat'] > diff_cutoff_lat].tolist()
+    print(indeces_list_lat)
 print('z')
-print(type(df.LatitudeDec.iloc[2]))
-df["LatitudeDec"] = [abs(0 - df.LatitudeDec.shift(-1)) for row in df.LatitudeDec]
 
 
-indeces_list_lat = df.index[df['Difference_down_lat'] > diff_cutoff_lat].tolist()
-    
-    for i in indeces_list_lon:
-        if not indeces:
-            print("list is empty")
-        else:
-            k = i - 1
-            df.LongitudeDec[i] = df.LongitudeDec[k] + diff_lat_std
-            df.replaced_grouped[i] = True
-            find_grouped_lat_outliers()
 
+dk["LatitudeDec"][765:800]
+indeces_list_lat
+
+
+def find_grouped_lat_outliers_change_them():
+    global dk
+    for i in indeces_list_lat:
+        k = i + 1
+        dk.LatitudeDec[k] = dk.LatitudeDec[i] + diff_cutoff_lat_dk
+        dk.replaced_grouped[k] = True
 print('x')
-      #calculate the longitudeDec difference
-        #df["Difference_down_lon"]  = [abs(df.LongitudeDec - df.LongitudeDec.shift(-1)) for row in df.LongitudeDec]    
-        #calculate the LatitudeDec difference
-        #calculate the cut off values
-        #diff_lon_std = df.Difference_up_lon.std()
-        #diff_cutoff_lon = (4*diff_lon_std)
-        
-        #indeces_list_lon = df.index[df['Difference_down_lon'] > diff_cutoff_lon].tolist()
-        indeces_list_lat = df.index[df['Difference_down_lat'] > diff_cutoff_lat].tolist()
-
-        for i in indeces_list_lon:
-            
-
-
-
-     
-
-
-
-
-
-
-
-
-
-
-
 
 
 def drop_zeros():
@@ -238,18 +226,4 @@ def drop_zeros():
     road_cleaned.drop(road_cleaned.loc[road_cleaned['zero_lon']==False].index, inplace=True)
     road_cleaned.drop(road_cleaned.loc[road_cleaned['zero_lat']==False].index, inplace=True)
 
-
-###############################################################
-dp = pd.read_csv('_roadnames_list.csv')
-roadnames_list = list(dp.columns.unique())
-len(roadnames_list)
-
-dk["Road"].nunique()
-dp
-
-dl = road_cleaned.sort_values(by = "LongitudeDec")
-
-df["Road"].unique()
-
-
-dl["LongitudeDec"]
+print('x')
