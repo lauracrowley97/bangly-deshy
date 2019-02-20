@@ -1,11 +1,11 @@
-Okay so just creating an overview of scripts we have/scripts we need to do by Wednesday..also might form part of the report as a general explanation of our approac
+Okay so just creating an overview of scripts we have/scripts we need to do by Wednesday..also might form part of the report as a general explanation of our approach
 
 First we clean the Road data from .lrps.htm files (original from Bangly-deshy ministry) with a python script (NAME??)
     1. First htm need to be imported with pandas: takes a list of the roadnames to iterate through every .lrps file and convert
     2. Takes one road at a time and looks for outliers of lrp points.
     3. Outliers that are of type 'bridge' are interpolated.
     4. all other outliers are (TO BE DECIDED...if no time we just delete these)
-    5. Chainage is checke: TO BE DONE (compare distance between two points and the difference in their chainage..some threshold value is needed, that is different for th Type of road)
+    5. Chainage (see below, not dealt with here)
     6. output files: file of all changed/deleted lrp points.
           ...also output a csv for each road with column names (road name,lrp number, lat, lon, chainage, updated (y/n))...containing all lrp points and whethere they were changed
 
