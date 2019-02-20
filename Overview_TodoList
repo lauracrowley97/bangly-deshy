@@ -8,38 +8,34 @@ Road_cleaning_FINAL.py - script that cleans the road data
 BurningMoreBridges.R - script that cleans the bride data, based on the cleaned road data
 
 Road Cleaning
-First we clean the road data from .lrps.htm files (original from the ministry) with a python script. Inside the script, the following cleaning process takes place:
-    1. The functions that will clean the data are defined and run.
-	a. import_data() this function reads in the road files ("name".lrps.htm) based on a list of names of all the roads in Bangladesh. It then iterates through all the road files, opening and closing each one in turn, while reading in the data to data frames and performing some first-pass data cleaning (removing columns of NAs, renaming column headers, etc.). It then calls determine_outliers on the data, and afterwards saves the cleaned data to a tab separated file.
-	b. determine_outliers() calculates (for the longitude and latitude separately and simultaneously) the difference between a longitude or latitude entry, and the corresponding value in the entry above and below it. It then takes the standard deviation of these difference values and uses that to create a cutoff value. When a difference is above a cutoff value, the function find_replace_outliers() is called, otherwise the data is appended to a data frame that stores the cleaned data.
-	c. find_replace_outliers() collects the outliers in the road data (identified in determine_outliers) into a data frame of outliers. It then identifies outliers that are unreasonably far away from both the entry above it and the entry below it (i.e. isolating the outlier (in the case of a single outlier) from the points above and below it that are not outliers themselves). These outliers are replaced by an interpolation (simple mean) of the entries above and below the outlier entry. The interpolated points are then merged with the data frame and used to replace the outlier points they correspond to.
-	c. 
- htm need to be imported with pandas: takes a list of the roadnames to iterate through every .lrps file and convert
-    2. Takes one road at a time and looks for outliers of lrp points.
-    3. Outliers that are of type 'bridge' are interpolated.
-    4. all other outliers are (TO BE DECIDED...if no time we just delete these)
-    5. Chainage (see below, not dealt with here)
-    6. output files: file of all changed/deleted lrp points.
-          ...also output a csv for each road with column names (road name,lrp number, lat, lon, chainage, updated (y/n))...containing all lrp points and whethere they were changed
+First, we clean the road data from .lrps.htm files (original from the ministry) with a python script. Inside the script, the following functions are defined and called:
+    1. The input files are (##update description of this) and a list of all the road names.
+    2. import_data() this function reads in the road files ("name".lrps.htm) based on a list of names of all the roads in Bangladesh. It then iterates through all the road files, opening and closing each one in turn, while reading in the data to data frames and performing some first-pass data cleaning (removing columns of NAs, renaming column headers, etc.). It then calls determine_outliers on the data, and afterwards saves the cleaned data to a tab separated file, with columns that contain data about LRP Number, Road Change, LRP Type, Description, Latitude, Longitude, and Road.
+    3. determine_outliers() calculates (for the longitude and latitude separately and simultaneously) the difference between a longitude or latitude entry, and the corresponding value in the entry above and below it. It then takes the standard deviation of these difference values and uses that to create a cutoff value. When a difference is above a cutoff value, the function find_replace_outliers() is called, otherwise the data is appended to a data frame that stores the cleaned data.
+    4. find_replace_outliers() collects the outliers in the road data (identified in determine_outliers) into a data frame of outliers. It then identifies outliers that are unreasonably far away from both the entry above it and the entry below it (i.e. isolating the outlier (in the case of a single outlier) from the points above and below it that are not outliers themselves). These outliers are replaced by an interpolation (simple mean) of the entries above and below the outlier entry. The interpolated points are then merged with the data frame and used to replace the outlier points they correspond to.
+    5. The output after calling these three function is (##update description of this)
 
 An initial visual scan of the generated co-ordinates should be completed at this point.
 
-Next script is an R script to clean the bridge data
-    1. Uses the .csv output from the roads, and the BMMS_overview.csv initially.
-    2. Iterates through each bridge point and compares it to the lrp in the road data to see if anything related to it has changed
-    3. If so, the corresponding bridge point needs regenerating
-    4. There are 4 ways of converting bridge point location from the road data
-    5. output files: file of all changed/deleted bridge lrp points
-              ...... also a the output csv of the BMMS_overview with corrected data
-    
+Bridge Cleaning
+Second, we clean the bridge data from the BMMS_overview.csv
+    1. The input files are the .csv output from the road cleaning, the BMMS_overview.csv, and a list of all the road names.
+    2. Then the script iterates through each bridge point and compares it to the lrp in the road data to see if anything related to it has changed.
+    3. If so, the corresponding bridge point needs regenerating.
+    4. There are 4 ways of converting bridge point location from the road data.
+	a. If the LRP number from the road data and the bridge data match, but their latitude and longitude coordinates do not, the latitude and longitude coordinates for the bridge data are replaced by the latitude and longitude coordinates from the matching (cleaned) road data.
+	b. If the short line distance between a bridge longitude and latitude and a road point longitude and latitude is less than a threshold of 20 meters, then the latitude and longitude coordinates for the bridge data are replaced by the latitude and longitude coordinates from the road data with the closest coordinate match.
+	c. If the chainage difference (##update description of this) is less than the threshold of 10 meters, than the latitude and longitude coordinates for the bridge data are replaced by the latitude and longitude coordinates from the road data with the closest chainage match.
+	d. If the chainage difference (##update description of this) is less than the threshold of 200 meters, (##update description of this)
+    5. If nothing else matched closely enough from the four previous methods, then the bridge location data is replaced by an interpolation (simple mean) of the entries above and below the outlier entry.
+    6. The output files are a version of the BMMS_overview with corrected data (BMMS_Overview_Cleaned.csv) and a change log (change_log.csv)
 
-
-Another R script generats the .tcv of the roads, that is required for simulation
-    1. this is adapted to the required format form the .csv file generated in the first python
-    2. Pretty straight forward - see brightspace: 
+Preparation for Java (Save as TCV)
+Third, another R script (Sava_as_TCV.R) generates the .tcv of the roads, that is required for simulation
+    1. The BMMS_Overview.csv (##update description of this / ##needs to be updated to BMMS_Overview_Cleaned.csv in R file?) is adapted to the required format form the .csv file generated during the data cleaning.
+    2. The description of the TCV file from brigthspace (below) is used to reformat the cleaned bridge data in the proper format for import. 
           "infrastructure/_roads.tcv: a tab-separated text-file with processed information from the
-          RMMS dataset. It contains a first line with explanation, and the following tab-separated data
-          starting from line 2, with one road per line. 
+          RMMS dataset. It contains a first line with explanation, and the following tab-separated data starting from line 2, with one road per line. 
 
               o road name: the official name of the road
               o lrp1: the name of the first LRP of the road
@@ -49,6 +45,7 @@ Another R script generats the .tcv of the roads, that is required for simulation
               o lrpn: the name of the last LRP of the road
               o latn: the latitude of lrpn
               o lonn: the longitude of lrpn"
+    3. The output is saved as data.tcv
               
               
  Dealing with semantic inaccuracy in Chainage
