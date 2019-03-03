@@ -1,0 +1,5 @@
+,Road,LRPName,Lat,Lon,Chainage,Description,Length,Cat,Next Node,Add On Process
+0,R851,LRPS,23.0175827,89.8358052,0.0,0,0.0,0,LRPSa,BlankProcess
+1,R851,LRPSa,23.0193049,89.8388052,0.365,0,0.0,0,LRPSb,BlankProcess
+2,R851,LRPSb,23.020527100000002,89.8403608,0.583,0,0.0,0,LRPE,BlankProcess
+3,R851,LRPE,23.0208049,89.8408886,0.65,0,0.0,0,PreRome,BlankProcess
