@@ -1,0 +1,8 @@
+INSTRUCTIONS
+To create the file 'Data_clean_N1_Dhaka_Chittagong_new.csv' that is used for Simio, do the following:
+1. Run the Data preparation script (this also creates all the other road files (as saved in cleaned_roads_all))
+2. Run the Clean_L_R_bridges.ipynb to fix the last bridge that has a L and R bridge (this is not fully automated, explanation is added in the file. This is however only one bridge, so it won't change a lot)
+3. Use this file 'Data_clean_N1_Dhaka_Chittagong_new.csv' for input for Simio
+4. Run the experiments (We saved the output as 'Basic Bitch Case_Model_Experiment1_ResultsSummary.csv')
+5. Use this file as input for the 'TwoPlots.ipynb' two generate the two graphs in the report
+6. The 'CalculateMaximumDelay.ipynb' is a little script to calculate the maximum delay to determine the warm up period (script is not fully automated)
