@@ -1,0 +1,21 @@
+Step by step walk through:
+
+A data-prep
+1. Follow the data preparation steps described in the report
+2. Run all lines inside jupyter notebook Data-Preparation part 1.ipynb
+3. Take data_traffic_road_segments as input of part 2 and use other input data in the folder --> (it is already in part 2, can be run seperately)
+4. Run all lines inside jupyter notebook Data-Preparation part 2.ipynb
+
+B visualisation:
+We use plotly as a tool to visualise, every useraccount provided with the username and api has a limited amount of plots per 24hours
+So be carefull with running to much visualisations at once (you can do 25 per account and we used several account --> which should be more than enough)
+The account details are allready provided in the scripts and should work. 
+
+1. Run lines in visualisation part 3.1 and use all provided input data in that same folder 
+2. You can look at the interactive plotly charts in the jupyter notebook and in the HTML files
+3. Run lines in visualisation part 3.2.1 and use all provided input data in that same folder
+4. Again the interactive plotly charts can be used only inside the jupyter notebook file 
+5. Run lines in visualisation part 3.2.2 and use all provided input data in that same folder
+6. Again the interactive plotly charts can be used only inside the jupyter notebook file 
+	
+

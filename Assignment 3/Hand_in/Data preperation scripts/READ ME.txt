@@ -1,2 +1,0 @@
-1. Run all scripts in part 1 with all the provided input data
-2. Take data_traffic_road_segments as input of part 2 and use other input data in the folder
